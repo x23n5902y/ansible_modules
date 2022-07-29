@@ -1,0 +1,19 @@
+SECTION: /servername/i
+KEY: ASTERISK? WS_INLINE? /(?![sS][eE][rR][vV][eE][rR][nN][aA][mM][eE])/ VALUE
+VALUE: ( WORD | NUMBER | ESCAPED_STRING | SYMBOL | ASTERISK )+
+ASTERISK: /\*[^\n]?/
+SECTION_NAME: (WORD | NUMBER | SYMBOL)+
+SYMBOL: ("/" | "." | "," | "_" | "-" | "+")
+%import common.WS_INLINE
+%import common.NEWLINE
+%import common.NUMBER
+%import common.WORD
+%import common.ESCAPED_STRING
+%ignore WS_INLINE
+%ignore NEWLINE
+
+
+section:           SECTION WS_INLINE? SECTION_NAME statements*
+statements:        ASTERISK? WS_INLINE? KEY WS_INLINE? VALUE NEWLINE?
+
+start: ( section )*
